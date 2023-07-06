@@ -5,57 +5,118 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Factory',
+            name="Factory",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('deleted', models.BooleanField(default=False)),
-                ('date_created', models.DateTimeField(auto_now_add=True)),
-                ('last_updated', models.DateTimeField(auto_now=True)),
-                ('name', models.CharField(help_text='Factory name', max_length=128)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("deleted", models.BooleanField(default=False)),
+                ("date_created", models.DateTimeField(auto_now_add=True)),
+                ("last_updated", models.DateTimeField(auto_now=True)),
+                ("name", models.CharField(help_text="Factory name", max_length=128)),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='Sprocket',
+            name="Sprocket",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('deleted', models.BooleanField(default=False)),
-                ('date_created', models.DateTimeField(auto_now_add=True)),
-                ('last_updated', models.DateTimeField(auto_now=True)),
-                ('teeth', models.IntegerField(help_text='Number of teeth on the sprocket.')),
-                ('pitch_diameter', models.FloatField(help_text='Diameter of the pitch circle of the sprocket.')),
-                ('outside_diameter', models.FloatField(help_text='Overall diameter of the sprocket.')),
-                ('pitch', models.IntegerField(help_text='The distance between corresponding points on adjacent teeth.')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("deleted", models.BooleanField(default=False)),
+                ("date_created", models.DateTimeField(auto_now_add=True)),
+                ("last_updated", models.DateTimeField(auto_now=True)),
+                (
+                    "teeth",
+                    models.IntegerField(help_text="Number of teeth on the sprocket."),
+                ),
+                (
+                    "pitch_diameter",
+                    models.FloatField(
+                        help_text="Diameter of the pitch circle of the sprocket."
+                    ),
+                ),
+                (
+                    "outside_diameter",
+                    models.FloatField(help_text="Overall diameter of the sprocket."),
+                ),
+                (
+                    "pitch",
+                    models.IntegerField(
+                        help_text="The distance between corresponding points on adjacent teeth."
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='SprocketProduction',
+            name="SprocketProduction",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('deleted', models.BooleanField(default=False)),
-                ('date_created', models.DateTimeField(auto_now_add=True)),
-                ('last_updated', models.DateTimeField(auto_now=True)),
-                ('sprocket_goal', models.IntegerField(help_text='How many sprockets to make')),
-                ('sprocket_actual', models.IntegerField(help_text='How many sprockets were made')),
-                ('date_produced', models.DateTimeField(help_text='Since there are imported data with different timestamps we use this to make a difference between db date creation and productiton date')),
-                ('factory', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sprocket.factory')),
-                ('sprocket', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sprocket.sprocket')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("deleted", models.BooleanField(default=False)),
+                ("date_created", models.DateTimeField(auto_now_add=True)),
+                ("last_updated", models.DateTimeField(auto_now=True)),
+                (
+                    "sprocket_goal",
+                    models.IntegerField(help_text="How many sprockets to make"),
+                ),
+                (
+                    "sprocket_actual",
+                    models.IntegerField(help_text="How many sprockets were made"),
+                ),
+                (
+                    "date_produced",
+                    models.DateTimeField(
+                        help_text="Since there are imported data with different timestamps we use this to make a difference between db date creation and productiton date"
+                    ),
+                ),
+                (
+                    "factory",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="sprocket.factory",
+                    ),
+                ),
+                (
+                    "sprocket",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="sprocket.sprocket",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
     ]

@@ -17,4 +17,3 @@ def read_json_file(url):
         data = json.load(json_file)
 
     return data
-
