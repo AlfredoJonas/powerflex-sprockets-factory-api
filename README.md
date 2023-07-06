@@ -115,7 +115,7 @@ _You can follow this steps in order to have an app build and up._
    ``` 
 5. Run tests to confirm everything is OK
     ```sh
-    docker-compose run web pytest
+    docker-compose run sprocket-api pytest
     ```
 6. To lift the app use docker as usual running
     ```sh
