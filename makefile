@@ -16,5 +16,6 @@ dockerbuild:
 
 setupdb:
 	docker-compose down -v
+	docker volume rm -f powerflex-sprockets-factory-api_db_data || true
 	docker-compose up -d postgres-db
 	docker-compose run sprocket-api make migrate loadfixtures
