@@ -1,7 +1,6 @@
 import pytest
 from django.core.management import call_command
 from sprocket.models import Sprocket, Factory, SprocketProduction
-from django.core.management.base import CommandError
 
 
 def get_json_data():

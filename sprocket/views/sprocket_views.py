@@ -31,6 +31,7 @@ class GetSprocketProduction(PaginatedView):
         "date_produced",
         "date_produced__lt",
         "date_produced__gt",
+        "date_created",
     ]
     schema_values = [
         "sprocket_id",

@@ -152,9 +152,9 @@ class PaginatedView(BaseView):
         if order_param:
             # Split the ordering into individual ordering conditions
             ordering_conditions = order_param.split(",")
-        elif hasattr(self.model, "created_at"):
-            # Check if model has created_at field and then use it to order by default to keep consistency data
-            ordering_conditions = ["-created_at"]
+        elif hasattr(self.model, "date_created"):
+            # Check if model has date_created field and then use it to order by default to keep consistency data
+            ordering_conditions = ["-date_created"]
 
         if len(ordering_conditions) > 0:
             queryset = query_order_to_paginated_api_view(

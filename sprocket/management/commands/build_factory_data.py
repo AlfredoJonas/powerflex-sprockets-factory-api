@@ -37,13 +37,17 @@ class Command(BaseCommand):
                     factory_obj = Factory(
                         date_created=datetime.now(timezone.utc),
                         name=f"Factory {index+1}",
-                        sprocket_actual=chart_data["sprocket_production_actual"][production_amount-1],
-                        sprocket_goal=chart_data["sprocket_production_goal"][production_amount-1]
+                        sprocket_actual=chart_data["sprocket_production_actual"][
+                            production_amount - 1
+                        ],
+                        sprocket_goal=chart_data["sprocket_production_goal"][
+                            production_amount - 1
+                        ],
                     )
 
                     sprocket_obj.save()
                     factory_obj.save()
-                    
+
                     for prod_index in range(production_amount):
                         sprocket_production_payload = {
                             "sprocket": sprocket_obj,

@@ -19,5 +19,5 @@ urlpatterns = [
     path("factory/<int:id>", GetFactory.as_view(), name="get_factory"),
     path("sprocket/<int:id>", GetSprocket.as_view(), name="get_sprocket"),
     path("sprocket/create", PostSprocket.as_view(), name="new_sprocket"),
-    path("sprocket/update", PutSprocket.as_view(), name="update_sprocket"),
+    path("sprocket/update/<int:id>", PutSprocket.as_view(), name="update_sprocket"),
 ]
