@@ -16,6 +16,8 @@ class Sprocket(MetaData):
 
 class Factory(MetaData):
     name = models.CharField(max_length=128, help_text="Factory name")
+    sprocket_goal = models.IntegerField(help_text="How many sprockets to make")
+    sprocket_actual = models.IntegerField(help_text="How many sprockets were made")
 
 
 class SprocketProduction(MetaData):

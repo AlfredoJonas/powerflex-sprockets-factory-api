@@ -20,6 +20,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         factory_json, sprockets_json = self.get_json_data()
+        sprockets_factory = []
         with transaction.atomic():
             try:
                 for index, sprocket in enumerate(sprockets_json["sprockets"]):
@@ -27,16 +28,22 @@ class Command(BaseCommand):
                         date_created=datetime.now(timezone.utc),
                         **sprocket,
                     )
-                    factory_obj = Factory(
-                        date_created=datetime.now(timezone.utc),
-                        name=f"Factory {index+1}",
-                    )
-                    sprocket_obj.save()
-                    factory_obj.save()
+
                     chart_data = factory_json["factories"][index]["factory"][
                         "chart_data"
                     ]
                     production_amount = len(chart_data["sprocket_production_actual"])
+
+                    factory_obj = Factory(
+                        date_created=datetime.now(timezone.utc),
+                        name=f"Factory {index+1}",
+                        sprocket_actual=chart_data["sprocket_production_actual"][production_amount-1],
+                        sprocket_goal=chart_data["sprocket_production_goal"][production_amount-1]
+                    )
+
+                    sprocket_obj.save()
+                    factory_obj.save()
+                    
                     for prod_index in range(production_amount):
                         sprocket_production_payload = {
                             "sprocket": sprocket_obj,
@@ -56,6 +63,7 @@ class Command(BaseCommand):
                             **sprocket_production_payload
                         )
                         sprocketProduction.save()
+                        sprockets_factory.append(sprocketProduction)
 
                 self.stderr.write(
                     self.style.SUCCESS(
