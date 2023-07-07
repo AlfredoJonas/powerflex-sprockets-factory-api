@@ -12,7 +12,7 @@
     sprocket service for consuming and process sprocket factory information!
     <br />
     <br />
-    <a href="https://www.postman.com/alfredojonas/workspace/truenorth-app/overview">Postman Collection</a>
+    <a href="https://www.postman.com/alfredojonas/workspace/powerflex-challenge/overview">Postman Collection</a>
     ·
     <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
     ·
