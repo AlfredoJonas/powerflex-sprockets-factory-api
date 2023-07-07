@@ -24,12 +24,10 @@ class Command(BaseCommand):
             try:
                 for index, sprocket in enumerate(sprockets_json["sprockets"]):
                     sprocket_obj = Sprocket(
-                        id=index + 1,
                         date_created=datetime.now(timezone.utc),
                         **sprocket,
                     )
                     factory_obj = Factory(
-                        id=index + 1,
                         date_created=datetime.now(timezone.utc),
                         name=f"Factory {index+1}",
                     )
