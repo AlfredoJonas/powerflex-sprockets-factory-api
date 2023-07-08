@@ -30,7 +30,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "localhost",
     "testserver",
-    "powerflex-sprockets-factory-api-dev.us-east-1.elasticbeanstalk.com"
+    "powerflex-sprockets-factory-api-dev.us-east-1.elasticbeanstalk.com",
 ]
 
 
@@ -63,7 +63,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://localhost:8000",
     "http://127.0.0.1:3000",
-    "http://powerflex-sprockets-factory-api-dev.us-east-1.elasticbeanstalk.com"
+    "http://powerflex-sprockets-factory-api-dev.us-east-1.elasticbeanstalk.com",
 ]
 
 CORS_ALLOW_CREDENTIALS = True

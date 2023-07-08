@@ -4,22 +4,25 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('sprocket', '0001_initial'),
+        ("sprocket", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='factory',
-            name='sprocket_actual',
-            field=models.IntegerField(default=0, help_text='How many sprockets were made'),
+            model_name="factory",
+            name="sprocket_actual",
+            field=models.IntegerField(
+                default=0, help_text="How many sprockets were made"
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='factory',
-            name='sprocket_goal',
-            field=models.IntegerField(default=0, help_text='How many sprockets to make'),
+            model_name="factory",
+            name="sprocket_goal",
+            field=models.IntegerField(
+                default=0, help_text="How many sprockets to make"
+            ),
             preserve_default=False,
         ),
     ]
