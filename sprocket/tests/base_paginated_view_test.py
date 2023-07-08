@@ -8,6 +8,9 @@ from sprocket.models import Factory, Sprocket
 
 
 def test_get_api_status():
+    """
+    Test to verify the API status.
+    """
     url = reverse("get_api_status")
     response = Client().get(url)
     assert response.status_code == 200
@@ -15,6 +18,9 @@ def test_get_api_status():
 
 @pytest.mark.django_db
 def test_get_sprocket_production_list(db):
+    """
+    Test to get the list of sprocket production.
+    """
     call_command("build_factory_data")
     url = reverse("get_sprocket_production")
     response = Client().get(url)
@@ -29,6 +35,9 @@ def test_get_sprocket_production_list(db):
 
 @pytest.mark.django_db
 def test_get_sprocket_production_pagination(db):
+    """
+    Test to get the paginated list of sprocket production.
+    """
     call_command("build_factory_data")
     url = reverse("get_sprocket_production")
     response = Client().get(
@@ -45,6 +54,9 @@ def test_get_sprocket_production_pagination(db):
 
 @pytest.mark.django_db
 def test_get_sprocket_production_filtered_by_factory(db):
+    """
+    Test to get the list of sprocket production filtered by factory.
+    """
     call_command("build_factory_data")
     url = reverse("get_sprocket_production")
     factory = Factory.objects.first()
@@ -62,6 +74,9 @@ def test_get_sprocket_production_filtered_by_factory(db):
 
 @pytest.mark.django_db
 def test_get_factory(db):
+    """
+    Test to get a single factory.
+    """
     call_command("build_factory_data")
     factory = Factory.objects.first()
     url = reverse("get_factory", args=[factory.id])
@@ -74,6 +89,9 @@ def test_get_factory(db):
 
 @pytest.mark.django_db
 def test_get_single_sprocket(db):
+    """
+    Test to get a single sprocket.
+    """
     call_command("build_factory_data")
     sprocket = Sprocket.objects.first()
     url = reverse("get_sprocket", args=[sprocket.id])
@@ -86,6 +104,9 @@ def test_get_single_sprocket(db):
 
 @pytest.mark.django_db
 def test_create_sprocket(db):
+    """
+    Test to create a new sprocket.
+    """
     url = reverse("new_sprocket")
     payload = {
         "teeth": 10,
@@ -126,6 +147,9 @@ def test_create_sprocket(db):
     ],
 )
 def test_create_wrong_payload_sprocket(payload):
+    """
+    Test to create a sprocket with wrong payload.
+    """
     url = reverse("new_sprocket")
     response = Client().post(url, json.dumps(payload), "application/json")
     assert response.status_code == 400
@@ -135,6 +159,9 @@ def test_create_wrong_payload_sprocket(payload):
 
 @pytest.mark.django_db
 def test_update_sprocket(db):
+    """
+    Test to update a sprocket.
+    """
     call_command("build_factory_data")
     sprocket = Sprocket.objects.first()
     url = reverse("update_sprocket", args=[sprocket.id])

@@ -14,12 +14,24 @@ from sprocket.utils.model_queries import (
 from sprocket.utils.utils import add_field_to_response, check_keys_on_dict
 
 
+# The `BaseView` class is a base class for handling HTTP requests and processing payloads in a Django
+# view.
 class BaseView(View):
     method = "POST"
     required_fields = []
     model = None
 
     def proccess_payload_post_put(self, request, **kwargs):
+        """
+        The function processes the payload of a POST or PUT request by decoding the body, loading it as
+        JSON, merging it with additional keyword arguments, and then validating the resulting
+        parameters.
+        
+        :param request: The `request` parameter is an object that represents the HTTP request being
+        made. It contains information such as the request method (e.g., GET, POST, PUT), headers, and
+        body of the request
+        :return: the `parameters` variable.
+        """
         body_unicode = getattr(request, "body", None).decode("utf-8")
         body = json.loads(body_unicode) if body_unicode else {}
         parameters = {**body, **kwargs}
@@ -27,12 +39,33 @@ class BaseView(View):
         return parameters
 
     def proccess_payload_get_delete(self, request, **kwargs):
+        """
+        The function processes a payload by merging the request's GET parameters with additional keyword
+        arguments and then validates the resulting parameters.
+        
+        :param request: The `request` parameter is an object that represents the HTTP request made to
+        the server. It contains information such as the request method (GET, POST, etc.), headers, query
+        parameters, and the request body
+        :return: the "parameters" variable.
+        """
         body = request.GET.dict()
         parameters = {**body, **kwargs}
         self.validate(request, parameters)
         return parameters
 
     def proccess_post_put(self, request, save_update_record, **kwargs):
+        """
+        The function processes a POST or PUT request, validates the data, saves the record, and returns
+        a JSON response.
+        
+        :param request: The `request` parameter is an object that represents the HTTP request made to
+        the server. It contains information such as the request method (GET, POST, PUT, etc.), headers,
+        query parameters, and the request body
+        :param save_update_record: The `save_update_record` parameter is a function that is responsible
+        for saving or updating a record based on the provided parameters. It takes the `parameters` as
+        input and should return the saved or updated record
+        :return: The code is returning the response object.
+        """
         try:
             parameters = self.proccess_payload_post_put(request, **kwargs)
             response = self.process_request(request, parameters)
@@ -54,6 +87,17 @@ class BaseView(View):
         return self.add_success(response)
 
     def proccess_get_delete(self, request, get_delete_record, **kwargs):
+        """
+        The function processes a GET or DELETE request by extracting parameters, making a request, and
+        returning a JSON response.
+        
+        :param request: The `request` parameter is an object that represents the HTTP request made by
+        the client. It contains information such as the request method (GET, DELETE, etc.), headers, and
+        query parameters
+        :param get_delete_record: The `get_delete_record` parameter is a function that takes in the
+        `parameters` as an argument and returns the record that needs to be deleted
+        :return: the response object after processing the request and adding success to it.
+        """
         parameters = self.proccess_payload_get_delete(request, **kwargs)
         try:
             response = self.process_request(request, parameters)
@@ -71,6 +115,13 @@ class BaseView(View):
         return add_field_to_response(response, key, status)
 
     def validate_payload(self, payload: dict):
+        """
+        The function validates a payload dictionary by checking for missing or extra fields.
+        
+        :param payload: The `payload` parameter is a dictionary that contains the data that needs to be
+        validated
+        :type payload: dict
+        """
         message = None
         missing_fields = check_keys_on_dict(self.required_fields, payload)
         more_fields = len(list(payload.keys())) > len(self.required_fields)
@@ -82,6 +133,16 @@ class BaseView(View):
             raise BadRequest(message + ",".join(self.required_fields))
 
     def validate(self, request, payload: dict):
+        """
+        The function validates the request method and payload against the required fields.
+        
+        :param request: The `request` parameter is an object that represents the HTTP request being
+        made. It typically contains information such as the HTTP method (GET, POST, etc.), headers, and
+        other request-specific data
+        :param payload: The `payload` parameter is a dictionary that contains the data that needs to be
+        validated
+        :type payload: dict
+        """
         if request.method != self.method:
             raise MethodNotAllowed
         elif len(self.required_fields) > 0:
@@ -119,6 +180,8 @@ class BaseView(View):
         raise NotImplementedError
 
 
+# The `PaginatedView` class is a base view for paginated API endpoints that allows filtering,
+# ordering, and pagination of data.
 class PaginatedView(BaseView):
     allowed_order_filters = []
     schema_values = []
@@ -129,6 +192,18 @@ class PaginatedView(BaseView):
         return self.model.objects.all()
 
     def process_request(self, request, body):
+        """
+        The function processes a request by filtering, ordering, and paginating data based on the
+        provided query parameters.
+        
+        :param request: The `request` parameter is the HTTP request object that contains information
+        about the current request being made to the server. It includes details such as the request
+        method (GET, POST, etc.), headers, user authentication, and other metadata
+        :param body: The `body` parameter is a dictionary that contains the request body data. It is
+        used to retrieve the query parameters for filtering, ordering, pagination, and other options
+        :return: a JSON response containing the filtered and ordered data along with pagination
+        information. The returned JSON has the following structure:
+        """
         # Get query parameters for filtering and ordering
         filter_param = body.get("filter", "")
         order_param = body.get("order", "")

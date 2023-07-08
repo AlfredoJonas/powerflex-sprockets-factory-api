@@ -49,9 +49,13 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-### Requirements, System, model and api Design
+### Api Design
 
 ![Api design][api-design]
+
+### ERD Design
+
+![ERD][erd]
 
 #### Task:
 - [] Build a RESTful api that services requests for sprocket factory data and sprockets.
@@ -154,4 +158,5 @@ Resources I find helpful and would like to give credit to.
 [django]: https://img.shields.io/badge/Django-103e2e?style=for-the-badge&logo=django&logoColor=white
 [django-url]: https://www.djangoproject.com/
 [system-design]: DataModelAndSystemChart.png
-[api-design]: apiDesign.png
+[api-design]: api-design.svg
+[erd]: ERD.svg
